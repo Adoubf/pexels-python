@@ -1,6 +1,6 @@
 [project]
 name = "pexels-python"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Pexels Python API client library"
 authors = [
     {name = "coralera",email = "haoyue@coralera.org"}
