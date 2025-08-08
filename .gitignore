@@ -1,0 +1,7 @@
+.env
+.venv
+poetry.lock
+www_pexels_com.md
+__pycache__
+.pytest_cache
+publish.py
