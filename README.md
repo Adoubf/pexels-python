@@ -247,4 +247,4 @@ CacheManager.create_redis_cache(
 
 ## 📄 许可
 
-MIT License
+[MIT License](LICENSE)
