@@ -1,7 +1,7 @@
 # 📸 pexels-python
 
 [![🇨🇳 中文](https://img.shields.io/badge/lang-中文-red.svg)](README.md)
-[![🇺🇸 English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
+[![🇺🇸 English](https://img.shields.io/badge/lang-English-blue.svg)](README_en.md)
 
 > 一个功能完整、高性能的 **Pexels API Python 客户端库**，支持同步 & 异步调用，内置自动重试、缓存、分页迭代等高级特性。
 

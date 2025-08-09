@@ -1,7 +1,7 @@
 # 📸 pexels-python
 
 [![🇨🇳 中文](https://img.shields.io/badge/lang-中文-red.svg)](README.md)
-[![🇺🇸 English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
+[![🇺🇸 English](https://img.shields.io/badge/lang-English-blue.svg)](README_en.md)
 
 > A **feature-complete, high-performance Pexels API client** for Python. Ships with sync & async clients, automatic retries, caching, and pagination utilities.
 
