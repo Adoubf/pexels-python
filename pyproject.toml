@@ -5,6 +5,15 @@ description = "A Pexels Python API client library"
 authors = [
     {name = "coralera",email = "haoyue@coralera.org"}
 ]
+
+license = "MIT"
+repository = "https://github.com/Adoubf/pexels-python"
+keywords = ["pexels", "api", "photos", "videos"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
 readme = "README.md"
 requires-python = ">=3.11,<4"
 dependencies = [
