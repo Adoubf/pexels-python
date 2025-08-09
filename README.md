@@ -1,5 +1,8 @@
 # 📸 pexels-python
 
+[![🇨🇳 中文](https://img.shields.io/badge/lang-中文-red.svg)](README.md)
+[![🇺🇸 English](https://img.shields.io/badge/lang-English-blue.svg)](README.en.md)
+
 > 一个功能完整、高性能的 **Pexels API Python 客户端库**，支持同步 & 异步调用，内置自动重试、缓存、分页迭代等高级特性。
 
 [![PyPI](https://img.shields.io/pypi/v/pexels-python?color=blue)](https://pypi.org/project/pexels-python/)
@@ -10,12 +13,9 @@
 
 ## 📑 目录
 - [✨ 特性](#-特性)
+- [📊 Pexels API 调用流程](#-pexels-api-调用流程)
 - [📦 安装](#-安装)
 - [🚀 快速开始](#-快速开始)
-  - [基础使用](#基础使用)
-  - [异步使用](#异步使用)
-  - [分页迭代](#分页迭代)
-  - [重试和缓存](#重试和缓存)
 - [🛡️ 错误处理](#️-错误处理)
 - [📝 日志配置](#-日志配置)
 - [📚 示例代码](#-示例代码)
@@ -53,18 +53,24 @@ flowchart LR
     F --> H[更新缓存]
     H --> I[返回给调用方]
     G --> E
-```
+````
+
+> **说明**：
+>
+> * 客户端会优先检查缓存，命中则直接返回；未命中则请求 API，成功后写入缓存。
+> * 若遇到 429，根据 `RetryConfig` 自动指数退避重试（可带抖动）。
 
 ---
 
 ## 📦 安装
 
-**使用 Poetry：**
+**Poetry：**
+
 ```bash
 poetry add pexels-python
-````
+```
 
-**或使用 pip：**
+**pip：**
 
 ```bash
 pip install pexels-python
@@ -89,6 +95,12 @@ client = PexelsClient(api_key="YOUR_PEXELS_API_KEY")
 
 photos = client.search_photos("cats", per_page=5)
 print(f"找到 {photos['total_results']} 张照片")
+
+curated = client.curated_photos(per_page=5)
+print(f"获取 {len(curated['photos'])} 张精选照片")
+
+videos = client.search_videos("nature", per_page=5)
+print(f"找到 {len(videos['videos'])} 个视频")
 ```
 
 ### 异步使用
@@ -137,9 +149,9 @@ client = PexelsClient(
 
 ```python
 from pexels_python import (
-    PexelsClient, 
+    PexelsClient,
     PexelsAuthError,
-    PexelsRateLimitError, 
+    PexelsRateLimitError,
     PexelsBadRequestError,
     PexelsNotFoundError,
     PexelsServerError
@@ -151,6 +163,14 @@ try:
     client.search_photos("test")
 except PexelsAuthError as e:
     print(f"认证失败: {e.message}")
+except PexelsRateLimitError as e:
+    print(f"限流错误，建议等待 {e.retry_after} 秒")
+except PexelsBadRequestError as e:
+    print(f"请求参数错误: {e.message}")
+except PexelsNotFoundError as e:
+    print(f"资源不存在: {e.message}")
+except PexelsServerError as e:
+    print(f"服务器错误: {e.message}")
 ```
 
 ---
@@ -180,6 +200,7 @@ set_info()   # 切换为信息级别
 ```bash
 export PEXELS_API_KEY="your_api_key_here"
 poetry run python examples/basic_usage.py
+poetry run python examples/async_usage.py
 ```
 
 ---
@@ -188,6 +209,8 @@ poetry run python examples/basic_usage.py
 
 ```bash
 poetry run python -m pytest tests/ -v
+poetry run python -m pytest tests/test_client.py -v
+poetry run python -m pytest tests/test_async_client.py -v
 ```
 
 ---
@@ -201,6 +224,13 @@ poetry run python -m pytest tests/ -v
 * `PaginationIterator` - 分页迭代器
 * `RetryConfig` - 重试配置
 * `CacheManager` - 缓存管理器
+
+**主要方法（选）：**
+
+* `search_photos(query, ...)`、`curated_photos(...)`、`get_photo(photo_id)`
+* `search_videos(query, ...)`、`popular_videos(...)`、`get_video(video_id)`
+* `iter_search_photos(...)`、`iter_curated_photos(...)`
+* `iter_search_videos(...)`、`iter_popular_videos(...)`
 
 ---
 
